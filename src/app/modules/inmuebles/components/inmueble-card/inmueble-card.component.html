@@ -1,0 +1,14 @@
+<div *ngIf="inmueble" class="card" style="width: 18rem; min-height: 320px;">
+    <img #imageInmueble [src]="inmueble.imagen" alt="Imagen piso" (error)="imageInmueble.hidden = true" [hidden]="imageInmueble.hidden" />
+    <img [hidden]="!imageInmueble.hidden" [src]="'assets/img/imagenNotFound.png'" class="card-img-top imagenReserva" alt="">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{inmueble.precio | currency :'EUR':''}} €
+        </h5>
+        <h6 class="card-subtitle fw-b">{{inmueble.direccion.nombreProvincia | uppercase}}</h6>
+        <p class="card-text">
+            {{inmueble.direccion.tipoVia | uppercase}} {{inmueble.direccion.nombreCalle | uppercase}}, <br>
+            ({{inmueble.direccion.ciudad | uppercase}})
+        </p>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+<main class="container">
+    <section class="my-5">
+        <div class="w-100 h-100 d-flex justify-content-center align-items-center" *ngIf="loading ">
+            <img [src]="'assets/gif/loading.gif'" alt="">
+        </div>
+        <article class="d-flex flex-wrap w-100 justify-content-center">
+            <div *ngFor="let inmueble of inmuebles" class="cursor-pointer  m-3">
+                <app-inmueble-card [inmueble]="inmueble"
+                    [routerLink]="[inmueble.direccion.provinciaUrl,inmueble.direccion.ciudadUrl, inmueble.id]"></app-inmueble-card>
+            </div>
+            <div class="w-100 d-flex justify-content-center">
+                <button class="btn btn-outline-dark" (click)="getMoreInmuebles()">
+                    Ver mas
+                </button>
+            </div>
+            <p *ngIf="!loading && !inmuebles.length" class="text-danger">
+                No se han encontrado inmuebles!
+            </p>
+        </article>
+    </section>
+</main>
