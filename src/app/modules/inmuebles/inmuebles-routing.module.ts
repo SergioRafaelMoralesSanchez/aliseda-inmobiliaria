@@ -5,7 +5,6 @@ import { InmuebleComponent } from "./pages/inmueble-page/inmueble.component";
 
 const routes: Routes = [
     { path: '', component: InmueblesComponent },
-    // { path: ':idInmueble', component: InmuebleComponent }
     { path: ':provinciaUrl/:poblacionUrl/:idInmueble', component: InmuebleComponent }
 ];
 

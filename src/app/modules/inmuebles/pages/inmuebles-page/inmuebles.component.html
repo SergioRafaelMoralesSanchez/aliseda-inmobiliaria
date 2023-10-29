@@ -9,6 +9,9 @@
                     [routerLink]="[inmueble.direccion.provinciaUrl,inmueble.direccion.ciudadUrl, inmueble.id]"></app-inmueble-card>
             </div>
             <div class="w-100 d-flex justify-content-center">
+                <div class="  d-flex justify-content-center align-items-center" *ngIf="loading">
+                    <img [src]="'assets/gif/loading.gif'" height="45px" alt="">
+                </div>
                 <button class="btn btn-outline-dark" (click)="getMoreInmuebles()">
                     Ver mas
                 </button>

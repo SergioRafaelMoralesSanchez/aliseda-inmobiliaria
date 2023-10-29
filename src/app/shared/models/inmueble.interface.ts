@@ -10,8 +10,7 @@ export interface Inmueble {
         nombreProvincia: string
         provinciaUrl: string
         ciudadUrl: string
-        latitude?: number
-        longitude?: number
-
+        latitude: number
+        longitude: number
     }
 }

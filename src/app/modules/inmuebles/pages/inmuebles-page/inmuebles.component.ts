@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { InmuebleService } from "../../services/inmueble.service";
+import { InmmobiliariaDto, InmuebleRaw } from "../../../../shared/models/dto/inmobiliaria-dto.interface";
 import { Inmueble } from "../../../../shared/models/inmueble.interface";
+import { InmuebleService } from "../../services/inmueble.service";
 
 @Component({
     selector: 'app-inmuebles',
@@ -8,14 +9,16 @@ import { Inmueble } from "../../../../shared/models/inmueble.interface";
     styleUrls: ['./inmuebles.component.css']
 })
 export class InmueblesComponent implements OnInit {
-    inmobiliaria: InmmobiliariaRaw | undefined;
+    inmobiliaria: InmmobiliariaDto | undefined;
     inmuebles: Inmueble[] = [];
-    numInmuebles = 1;
+    numInmueblesPage = 1;
 
     loading = false;
+
     constructor(private inmuebleService: InmuebleService) {
 
     }
+
     async ngOnInit(): Promise<void> {
         await this.getInmbuebles();
     }
@@ -24,24 +27,9 @@ export class InmueblesComponent implements OnInit {
         try {
             this.loading = true;
 
-            this.inmobiliaria = await this.inmuebleService.getAllInmuebles(this.numInmuebles) as InmmobiliariaRaw;
+            const inmobiliaria = await this.inmuebleService.getAllInmuebles(this.numInmueblesPage);
 
-            this.inmobiliaria.data.forEach((inmuebleRaw: InmuebleRaw) => {
-                this.inmuebles.push({
-                    id: inmuebleRaw.id,
-                    precio: inmuebleRaw.Precio,
-                    descripcion: inmuebleRaw.Descripcion,
-                    imagen: inmuebleRaw.imagenes[0].Uri,
-                    direccion: {
-                        nombreCalle: inmuebleRaw.StreetName,
-                        tipoVia: inmuebleRaw.TipoVia,
-                        ciudad: inmuebleRaw.Ciudad,
-                        nombreProvincia: inmuebleRaw.nombreProvincia,
-                        provinciaUrl: inmuebleRaw.provinciaUrl,
-                        ciudadUrl: inmuebleRaw.ciudadUrl
-                    }
-                });
-            });
+            this.mapearInmuebles(inmobiliaria);
         } catch (error) {
             // TODO manage errors
             console.error(error);
@@ -50,30 +38,30 @@ export class InmueblesComponent implements OnInit {
         }
     }
 
+    mapearInmuebles(inmobiliaria: InmmobiliariaDto) {
+        inmobiliaria.data.forEach((inmuebleRaw: InmuebleRaw) => {
+            this.inmuebles.push({
+                id: inmuebleRaw.id,
+                precio: inmuebleRaw.Precio,
+                descripcion: inmuebleRaw.Descripcion,
+                imagen: inmuebleRaw.imagenes[0].Uri,
+                direccion: {
+                    nombreCalle: inmuebleRaw.StreetName,
+                    tipoVia: inmuebleRaw.TipoVia,
+                    ciudad: inmuebleRaw.Ciudad,
+                    nombreProvincia: inmuebleRaw.nombreProvincia,
+                    provinciaUrl: inmuebleRaw.provinciaUrl,
+                    ciudadUrl: inmuebleRaw.ciudadUrl,
+                    latitude: inmuebleRaw.Latitude,
+                    longitude: inmuebleRaw.Longitude
+                }
+            });
+        });
+    }
+
     async getMoreInmuebles() {
-        this.numInmuebles += 1;
+        this.numInmueblesPage += 1;
         await this.getInmbuebles();
     }
 
-}
-
-export interface InmmobiliariaRaw {
-    data: InmuebleRaw[]
-}
-
-export interface InmuebleRaw {
-    id: string
-    Precio: string
-    StreetName: string
-    Descripcion: string
-    Ciudad: string
-    TipoVia: string
-    ciudadUrl: string
-    nombreProvincia: string
-    provinciaUrl: string
-    imagenes: Imagen[]
-}
-
-export interface Imagen {
-    Uri: string
 }
