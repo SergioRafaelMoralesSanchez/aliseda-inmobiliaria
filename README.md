@@ -5,6 +5,9 @@ Esta es mi prueba tecnica que presento a la ©Aliseda, Servicios de gestión inm
 
 Antes de nada la aplicacion se encuentra desplegada en la siguiente URL:
 
+https://aliseda-inmobiliaria-prueba-tecnica.netlify.app
+
+
 **Despliegue y desarrollo en Local**
 
 _La aplicación ha sido desarrollada con Angular 16.2.0, Bootstrap 5.3.2 (para acelerar el desarrollo de la interfaz) y con NodeJs 18.16.0. Ten en cuenta de tener alguna version compatible de este ultimo para poder lanzar la aplicacion_
